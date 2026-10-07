@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object Login : NavKey
+@Serializable
 data class Home(
     val nombre: String
 ) : NavKey
