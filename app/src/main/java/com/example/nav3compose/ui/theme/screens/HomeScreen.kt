@@ -13,29 +13,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.nav3compose.ui.theme.components.ModalDrawer
+import com.example.nav3compose.ui.theme.components.NavBar
 import com.example.nav3compose.ui.theme.components.TopBar
+import com.example.nav3compose.ui.theme.navigation.NavigationWrapper
 
 @Composable
 fun HomeScreen(
     nombre: String,
     onLogout: () -> Unit
 ) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar()}
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Bienvenido, $nombre")
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onLogout) {
-                Text(text = "Cerrar sesión")
+    ModalDrawer(){
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { TopBar()},
+            bottomBar = { NavBar() }
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Bienvenido, $nombre")
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = onLogout) {
+                    Text(text = "Cerrar sesión")
+                }
             }
         }
     }
+
 }
