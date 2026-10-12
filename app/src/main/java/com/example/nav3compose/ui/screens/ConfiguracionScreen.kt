@@ -1,4 +1,4 @@
-package com.example.nav3compose.ui.theme.screens
+package com.example.nav3compose.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.nav3compose.ui.theme.Nav3ComposeTheme
-import com.example.nav3compose.ui.theme.navigation.NavigationWrapper
+import com.example.nav3compose.navigation.NavigationWrapper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

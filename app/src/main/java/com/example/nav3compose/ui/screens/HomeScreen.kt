@@ -1,4 +1,4 @@
-package com.example.nav3compose.ui.theme.screens
+package com.example.nav3compose.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,9 +12,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.nav3compose.ui.theme.components.ModalDrawer
-import com.example.nav3compose.ui.theme.components.NavBar
-import com.example.nav3compose.ui.theme.components.TopBar
+import com.example.nav3compose.ui.components.ModalDrawer
+import com.example.nav3compose.ui.components.NavBar
+import com.example.nav3compose.ui.components.TopBar
 
 @Composable
 fun HomeScreen(

@@ -1,4 +1,4 @@
-package com.example.nav3compose.ui.theme.screens
+package com.example.nav3compose.ui.screens
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable

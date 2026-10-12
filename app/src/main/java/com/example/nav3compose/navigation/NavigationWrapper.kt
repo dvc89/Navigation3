@@ -1,13 +1,13 @@
-package com.example.nav3compose.ui.theme.navigation
+package com.example.nav3compose.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.nav3compose.ui.theme.screens.Home
-import com.example.nav3compose.ui.theme.screens.HomeScreen
-import com.example.nav3compose.ui.theme.screens.Login
-import com.example.nav3compose.ui.theme.screens.LoginScreen
+import com.example.nav3compose.ui.screens.Home
+import com.example.nav3compose.ui.screens.HomeScreen
+import com.example.nav3compose.ui.screens.Login
+import com.example.nav3compose.ui.screens.LoginScreen
 
 @Composable
 fun NavigationWrapper() {

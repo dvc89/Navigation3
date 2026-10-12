@@ -1,4 +1,4 @@
-package com.example.nav3compose.ui.theme.components
+package com.example.nav3compose.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu

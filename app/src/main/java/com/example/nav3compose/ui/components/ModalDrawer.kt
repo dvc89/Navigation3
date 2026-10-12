@@ -1,4 +1,4 @@
-package com.example.nav3compose.ui.theme.components
+package com.example.nav3compose.ui.components
 
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
