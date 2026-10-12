@@ -19,10 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.nav3compose.ui.viewModel.UsuarioViewModel
 
 @Composable
 fun LoginScreen(
-    onLoginSuccess: (String) -> Unit
+    onLoginSuccess: (String) -> Unit,
+    viewModel: UsuarioViewModel = hiltViewModel()
 ) {
     var nombre by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -54,6 +57,7 @@ fun LoginScreen(
             enabled = isFormValid,
             onClick = {
                 if (isFormValid) {
+                    viewModel.insertarUsuario(nombre, password)
                     onLoginSuccess(nombre)
                 }
             }
