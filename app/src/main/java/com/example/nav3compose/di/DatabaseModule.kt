@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.example.nav3compose.data.dao.UsuarioDao
 import com.example.nav3compose.data.local.AppDatabase
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,18 +20,6 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "usuarios_database"
-        ).build()
-    }
+    fun provideFirestore(): FirebaseFirestore = Firebase.firestore
 
-    @Provides
-    fun provideUsuarioDao(database: AppDatabase): UsuarioDao {
-        return database.usuarioDao()
-    }
 }
