@@ -18,7 +18,7 @@ class UsuarioViewModel @Inject constructor(
     private val repository: UsuarioRepository
 ) : ViewModel() {
 
-    // Lista de usuarios almacenados en Room
+    // Lista de usuarios almacenados en Firebase
     val usuarios: StateFlow<List<Usuario>> = repository.usuarios.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -34,7 +34,9 @@ class UsuarioViewModel @Inject constructor(
     fun insertarUsuario(nombre: String, contrasena: String) {
         viewModelScope.launch {
             val usuario = Usuario(
-                id = 0, nombre = nombre, contrasena = contrasena
+                id = "",
+                nombre = nombre,
+                contrasena = contrasena
             )
 
             repository.insert(usuario)
@@ -42,7 +44,7 @@ class UsuarioViewModel @Inject constructor(
     }
 
     // Buscar usuario por identificador
-    fun buscarPorId(id: Long) {
+    fun buscarPorId(id: String) {
         viewModelScope.launch {
             _usuarioSeleccionado.value = repository.getById(id)
         }
