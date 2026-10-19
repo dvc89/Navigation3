@@ -43,6 +43,20 @@ class UsuarioViewModel @Inject constructor(
         }
     }
 
+    // Eliminar usuario por ID
+    fun eliminarUsuario(id: String) {
+        viewModelScope.launch {
+            repository.delete(id)
+        }
+    }
+
+    // Actualizar usuario
+    fun actualizarUsuario(usuario: Usuario) {
+        viewModelScope.launch {
+            repository.update(usuario)
+        }
+    }
+
     // Buscar usuario por identificador
     fun buscarPorId(id: String) {
         viewModelScope.launch {

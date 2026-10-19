@@ -41,6 +41,21 @@ class UsuarioRepository @Inject constructor(
         return docRef.id
     }
 
+    // Eliminar usuario en Firestore
+    suspend fun delete(id: String) {
+        usuariosCollection.document(id).delete().await()
+    }
+
+    // Actualizar usuario en Firestore
+    suspend fun update(usuario: Usuario) {
+        usuariosCollection.document(usuario.id).set(
+            mapOf(
+                "nombre" to usuario.nombre,
+                "contrasena" to usuario.contrasena
+            )
+        ).await()
+    }
+
     // Buscar por ID de documento
     suspend fun getById(id: String): Usuario? {
         val doc = usuariosCollection.document(id).get().await()
