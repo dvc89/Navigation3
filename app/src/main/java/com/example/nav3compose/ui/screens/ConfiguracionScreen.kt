@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -29,12 +30,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberUpdatedMarkerState
 
 @Composable
 fun ConfiguracionContentScreen() {
     val context = LocalContext.current
     var temperatura by remember { mutableFloatStateOf(20f) }
     var tieneSensorReal by remember { mutableStateOf(false) }
+
+    // Ubicación de ejemplo para el mapa
+    val ubicacionActual = remember { LatLng(37.9922, -1.1307) }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(ubicacionActual, 14f)
+    }
+    val markerState = rememberUpdatedMarkerState(position = ubicacionActual)
 
     // Manejo del Sensor de Temperatura Ambiental (SensorManager)
     DisposableEffect(context) {
@@ -92,33 +106,55 @@ fun ConfiguracionContentScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
         Text(
-            text = "Sensor de Temperatura",
+            text = "Sensor & Google Maps",
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
+        // Mapa de Google Maps mostrando la temperatura en el marcador
         Card(
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState
+            ) {
+                Marker(
+                    state = markerState,
+                    title = "$emojiEstado $estadoTexto",
+                    snippet = "Temperatura actual: ${"%.1f".format(temperatura)} °C"
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Tarjeta con información de temperatura
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Column(
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Ilustración / Emoji según la temperatura
                 Text(
                     text = emojiEstado,
-                    fontSize = 80.sp
+                    fontSize = 50.sp
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "$estadoTexto (${"%.1f".format(temperatura)} °C)",
                     style = MaterialTheme.typography.titleLarge,
@@ -127,16 +163,16 @@ fun ConfiguracionContentScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Si el dispositivo o emulador no posee sensor de temperatura ambiental físico, mostramos un Slider para simularlo
+        // Controles de prueba en caso de no poseer sensor físico real
         if (!tieneSensorReal) {
             Text(
-                text = "Tu dispositivo no posee un sensor ambiental físico. Usa el deslizador para simular el cambio de temperatura:",
+                text = "Sin sensor ambiental físico. Simula la temperatura:",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Slider(
                 value = temperatura,
                 onValueChange = { temperatura = it },
