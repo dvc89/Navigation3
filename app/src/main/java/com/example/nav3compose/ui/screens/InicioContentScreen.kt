@@ -28,9 +28,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -52,12 +56,19 @@ import com.example.nav3compose.ui.viewModel.UsuarioViewModel
 fun InicioContentScreen(
     nombre: String,
     onLogout: () -> Unit,
-    viewModel: UsuarioViewModel = hiltViewModel()
+    viewModel: UsuarioViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val usuarios by viewModel.usuarios.collectAsState()
     var usuarioAEditar by remember { mutableStateOf<Usuario?>(null) }
     var usuarioAEliminar by remember { mutableStateOf<Usuario?>(null) }
+    var qrResult by remember { mutableStateOf<String?>(null) }
+    val scanner = remember(context) {
+        val options = GmsBarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_QR_CODE, Barcode.FORMAT_AZTEC)
+            .build()
+        GmsBarcodeScanning.getClient(context, options)
+    }
 
     // Solicitud de permiso de notificaciones en Android 13+ (API 33+)
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -140,6 +151,44 @@ fun InicioContentScreen(
                             }
                         }
                     }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedButton(
+            onClick = {
+                scanner.startScan()
+                    .addOnSuccessListener { barcode ->
+                        qrResult = barcode.rawValue ?: "Código QR vacío"
+                    }
+                    .addOnCanceledListener {
+                        // Cancelado
+                    }
+                    .addOnFailureListener { e ->
+                        qrResult = "Error al escanear: ${e.localizedMessage}"
+                    }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Escanear Código QR")
+        }
+
+        qrResult?.let { result ->
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "Resultado del QR:",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = result)
                 }
             }
         }
