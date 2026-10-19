@@ -56,10 +56,6 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     //Serialization
     implementation(libs.kotlinx.serialization.core )
-    //Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 
     // Dagger
     implementation(libs.dagger.hilt.android)
