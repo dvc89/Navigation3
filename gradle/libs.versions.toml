@@ -17,6 +17,7 @@ googleServices = "4.5.0"
 firebaseBom = "35.0.0"
 mapsCompose = "9.0.1"
 playServicesMaps = "20.1.0"
+media3 = "1.5.1"
 
 
 [libraries]
@@ -56,6 +57,10 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 # Maps
 maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+
+# Media3 ExoPlayer
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
 
 
 [plugins]
